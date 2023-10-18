@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-login',
@@ -15,7 +18,9 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder : FormBuilder,
     private authService : AuthService,
-    private router : Router
+    private router : Router,
+    private loadingController: LoadingController,
+    private alertController: AlertController
   ) { }
 
   get email (){
@@ -26,15 +31,10 @@ export class LoginPage implements OnInit {
     return this.credentials.get('password');
   }
 
-  get username (){
-    return this.credentials.get('username');
-  }
-
   ngOnInit() {
     this.credentials = this.formBuilder.group({
       email : ['',[Validators.required,Validators.email]],
-      password : ['',[Validators.required,Validators.minLength(6)]],
-      username : ['', [Validators.required, Validators.minLength(6)]]
+      password : ['',[Validators.required,Validators.minLength(6)]]
     })
   }
 
@@ -43,6 +43,7 @@ export class LoginPage implements OnInit {
 
     if (user){
       console.log("OK");
+      await this.presentConfirmation();
     }else{
       console.log("NOT OK");
     }
@@ -53,10 +54,43 @@ export class LoginPage implements OnInit {
     const user = await this.authService.login(this.credentials.value);
     if (user){
       console.log("OK");
-      this.router.navigate(['/home']);
+      this.presentLoader();
     }else{
       console.log("NOT OK");
     }
   }
  // recover ()
+
+
+
+ async presentConfirmation() {
+  const alert = await this.alertController.create({
+    header: 'Registro exitoso',
+    message: 'Tu registro se ha completado correctamente.',
+    buttons: [
+      {
+        text: 'OK',
+        handler: () => {
+          this.router.navigate(['/principal']);
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+
+ //Loader del login
+ async presentLoader() {
+  const loading = await this.loadingController.create({
+    message: 'Iniciando sesión...', 
+    duration: 2000
+  });
+
+  await loading.present();
+
+  loading.onDidDismiss().then(() => {
+      this.router.navigate(['/principal']);
+    });
+  }
 }

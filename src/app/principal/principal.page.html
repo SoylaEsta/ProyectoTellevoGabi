@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>UID</ion-title>
+    <ion-card-subtitle *ngIf="displayName">{{ displayName }}</ion-card-subtitle>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="principal">
+      Principal
+    </ion-segment-button>
+    <ion-segment-button value="clima">
+      Clima
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="segment === 'principal'">
+    <!-- Contenido de la sección "Principal" -->
+
+      <!-- Botón de cierre de sesión -->
+    <ion-button (click)="confirmLogout()" expand="block" color="danger" style="position: absolute; bottom: 20px; right: 20px;">
+      Cerrar sesion
+    </ion-button>
+  </div>
+
+  <div *ngIf="segment === 'clima'">
+    <!-- Espacio para cargar la página del clima -->
+    <app-clima-widget></app-clima-widget>
+  </div>
+
+
+</ion-content>

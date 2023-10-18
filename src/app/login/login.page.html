@@ -11,17 +11,8 @@
     <img src="assets/fotoauto.jpeg" alt="Logo de la aplicación" class="app-logo" />
   </div>
   
-  <form [formGroup]="credentials">
-    <ion-item>
-      <ion-input
-        type="username"
-        placeholder="Nombre de Usuario"
-        formControlName="username"
-        class="input-field"
-      ></ion-input>
-    </ion-item>
-
-    <ion-item>
+  <form [formGroup]="credentials" class="login-form">
+    <ion-item class="input-item">
       <ion-input
         type="email"
         placeholder="Correo Electrónico"
@@ -29,8 +20,14 @@
         class="input-field"
       ></ion-input>
     </ion-item>
+    <div *ngIf="credentials.get('email')?.hasError('required') && credentials.get('email')?.touched" class="error-message">
+      Campo de correo electrónico requerido.
+    </div>
+    <div *ngIf="credentials.get('email')?.hasError('email') && credentials.get('email')?.touched" class="error-message">
+      Correo electrónico no válido.
+    </div>
 
-    <ion-item>
+    <ion-item class="input-item">
       <ion-input
         type="password"
         placeholder="Contraseña"
@@ -38,11 +35,15 @@
         class="input-field"
       ></ion-input>
     </ion-item>
-    
+    <div *ngIf="credentials.get('password')?.hasError('required') && credentials.get('password')?.touched" class="error-message">
+      Campo de contraseña requerido.
+    </div>
+    <div *ngIf="credentials.get('password')?.hasError('minlength') && credentials.get('password')?.touched" class="error-message">
+      La contraseña debe tener al menos 6 caracteres.
+    </div>
+
     <ion-button expand="full" color="primary" class="login-button" (click)="login();">Iniciar Sesión</ion-button>
 
     <ion-button expand="full" fill="clear" class="register-link" (click)="register();">¿No tienes una cuenta? Regístrate</ion-button>
-
-   
   </form>
 </ion-content>
