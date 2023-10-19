@@ -8,7 +8,6 @@ import { NavController } from '@ionic/angular';
 import { ClimaWidgetComponent } from '../clima-widget/clima-widget.component'; // Asegúrate de que la ruta sea correcta
 
 
-
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.page.html',
@@ -33,6 +32,10 @@ export class PrincipalPage implements OnInit {
   ngOnInit() {
   }
 
+
+  vehicle(){
+    this.navCtrl.navigateRoot('/vehiculo');
+  }
 
   async confirmLogout() {
     const alert = await this.alertController.create({

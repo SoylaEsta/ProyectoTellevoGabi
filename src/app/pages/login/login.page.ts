@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
@@ -49,6 +49,10 @@ export class LoginPage implements OnInit {
     }
   }
 
+
+  passwordRecover(){
+    this.router.navigate(['/password-recover']);
+  }
   
   async login () {
     const user = await this.authService.login(this.credentials.value);
@@ -59,8 +63,6 @@ export class LoginPage implements OnInit {
       console.log("NOT OK");
     }
   }
- // recover ()
-
 
 
  async presentConfirmation() {

@@ -39,17 +39,20 @@ ion-header {
 
 /* Estilos para los campos de entrada */
 .input-item {
+  border-radius: 15px;
   margin-bottom: 10px;
-  width: 100%; /* Ancho completo */
+  width: 80%; /* Ancho máximo del campo de entrada */
+  max-width: 300px; /* Ancho máximo personalizado */
+  margin: 0 auto; /* Centrar horizontalmente */
 }
 
 .input-field {
   font-size: 16px;
   width: 100%; /* Ancho completo */
-  border: 2px solid #bdc3c7;
   border-radius: 5px;
   padding: 10px;
 }
+
 
 /* Estilos para los botones de inicio de sesión y registro */
 .login-button {
