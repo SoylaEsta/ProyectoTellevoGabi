@@ -46,6 +46,7 @@ export class LoginPage implements OnInit {
       await this.presentConfirmation();
     }else{
       console.log("NOT OK");
+      this.presentErrorAlert('Credenciales incorrectas', 'O correo en uso');
     }
   }
 
@@ -56,20 +57,25 @@ export class LoginPage implements OnInit {
   }
   
   async login() {
-    if (this.authService.isAuthenticated()) {
-      // El usuario está autenticado, realiza la lógica de inicio de sesión
+    // Verifica si el usuario ha ingresado credenciales válidas en el formulario
+    if (this.credentials.valid) {
+      // Intenta iniciar sesión con las credenciales ingresadas
       const user = await this.authService.login(this.credentials.value);
       if (user) {
+        // El inicio de sesión fue exitoso, realiza la lógica apropiada
         console.log("OK");
         this.presentLoader();
       } else {
+        // El inicio de sesión falló, muestra un mensaje de error
         console.log("NOT OK");
+        this.presentErrorAlert('Inicio de sesión fallido', 'Usuario no encontrado o contraseña incorrecta.');
       }
     } else {
-      // El usuario no está autenticado, muestra un mensaje de error o realiza una acción apropiada
-      console.log("Usuario no autenticado");
+      // Las credenciales ingresadas no son válidas, muestra un mensaje de error
+      this.presentErrorAlert('Credenciales incorrectas', 'Verifica tus datos.');
     }
   }
+  
 
 
  async presentConfirmation() {
@@ -101,5 +107,14 @@ export class LoginPage implements OnInit {
   loading.onDidDismiss().then(() => {
       this.router.navigate(['/principal']);
     });
+  }
+
+  async presentErrorAlert(title: string, message: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
