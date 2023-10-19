@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
@@ -50,17 +50,24 @@ export class LoginPage implements OnInit {
   }
 
 
+
   passwordRecover(){
     this.router.navigate(['/password-recover']);
   }
   
-  async login () {
-    const user = await this.authService.login(this.credentials.value);
-    if (user){
-      console.log("OK");
-      this.presentLoader();
-    }else{
-      console.log("NOT OK");
+  async login() {
+    if (this.authService.isAuthenticated()) {
+      // El usuario está autenticado, realiza la lógica de inicio de sesión
+      const user = await this.authService.login(this.credentials.value);
+      if (user) {
+        console.log("OK");
+        this.presentLoader();
+      } else {
+        console.log("NOT OK");
+      }
+    } else {
+      // El usuario no está autenticado, muestra un mensaje de error o realiza una acción apropiada
+      console.log("Usuario no autenticado");
     }
   }
 

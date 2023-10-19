@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -18,10 +19,12 @@ const routes: Routes = [
   },
   {
     path: 'principal',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/principal/principal.module').then( m => m.PrincipalPageModule)
   },
   {
     path: 'vehiculo',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/vehiculo/vehiculo.module').then( m => m.VehiculoPageModule)
   },
   {

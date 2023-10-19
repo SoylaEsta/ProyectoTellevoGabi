@@ -7,9 +7,10 @@ import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from
 export class AuthService {
 
   constructor(
-    private auth: Auth
+    private auth: Auth,
   ) { }
 
+  
   async register({ email, password }: any) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -37,5 +38,11 @@ export class AuthService {
       return null;
     }
   }
+
+    // Verifica si el usuario está autenticado
+    isAuthenticated(): boolean {
+      return !!this.auth.currentUser; // Comprueba si hay un usuario autenticado
+    }
+
   
 }
