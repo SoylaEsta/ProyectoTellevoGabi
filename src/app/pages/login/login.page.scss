@@ -6,7 +6,8 @@
 }
 
 ion-header {
-  --ion-background-color: #34495e;
+  --ion-background-color: #f4f4f4;
+
 }
 
 .header-title {
@@ -34,7 +35,7 @@ ion-header {
   max-width: 350px; /* Ancho máximo del logotipo */
   height: auto; /* Altura automática */
   border-radius: 50%; /* Forma circular */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(193, 190, 190, 0.2);
 }
 
 /* Estilos para los campos de entrada */
